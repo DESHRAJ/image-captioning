@@ -30,6 +30,7 @@ DBS_CONFIG = {
     'id': "evalscript", 
     'seed': 123, 
     'div_vis_dir': str(os.path.join(settings.MEDIA_ROOT, 'div_vis_dir')),
+    'image_dir': os.path.join(settings.BASE_DIR, 'media', 'diverse_beam_search', 'dbs')
 }
 
 DBS_GPUID = -1

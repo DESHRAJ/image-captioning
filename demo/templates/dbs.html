@@ -235,7 +235,7 @@ function submitImageUsingUrl(){
   }).done(function(data){
     console.log(data);
     $("#inputImageAfterUpload").attr('src', data["file_path"]);
-    $("#label").val("");
+    $("#image_url").val("");
     $("#show-grad-cam-result").hide();
     $("#ResultDiv").show();
 

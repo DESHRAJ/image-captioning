@@ -74,6 +74,13 @@ The captioning model is trained on COCO using the <a href="https://github.com/ka
   <div class="page-header">
     <h2 id="userImages">Try Diverse Beam Search On Your Images</h2>
   </div>
+  {% block url_content %}
+  {% include 'upload_image_url.html' %}
+  {% endblock %}
+
+  <div class="col-sm-12">
+    <h3 align="center">OR</h3>
+  </div>
 
   <form id="my-dropzone" method="post" class="dropzone
   " action="{% url "upload" %}" enctype="multipart/form-data">
@@ -196,6 +203,41 @@ function submitImageForCaptioning () {
   .done(function(response) {
   });
 }
+
+function submitImageUsingUrl(){
+  var src = document.getElementById("image_url").value;
+  $('#comments').prepend('<br>');
+  $('#comments').prepend('<li>' + "Starting the Image Download process." + '</li>');
+
+  scrollToElement($("#termstart"));
+  scrollToElement($("#resultHeading"));
+
+  $.ajax({
+    type : "POST",
+    url  : '{% url 'upload-url' %}',
+    data : {'src': src  , 'socketid': "{{socketid}}", 'csrfmiddlewaretoken': '{{ csrf_token }}', type:"dba"}
+  }).done(function(data){
+    console.log(data);
+    $("#inputImageAfterUpload").attr('src', data["file_path"]);
+    $("#image_url").val("");
+    $("#show-grad-cam-result").hide();
+    $("#ResultDiv").show();
+
+  });
+};
+
+$("#image_url").keydown(function(e){
+  if (e.which === 13){
+    $("#image_url_submit_btn").click();
+  }
+});
+
+$('#image_url').on('paste', function(){
+  setTimeout(function(){
+    $("#image_url_submit_btn").click();
+  }, 0);
+});
+
 </script>
 <br>
   <div class="page-header">
